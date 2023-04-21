@@ -1,0 +1,82 @@
+<h2>Reactivos: <small>Dinámicos</small></h2>
+<hr />
+
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario">
+  <!-- Nombre -->
+  <section class="mb-3 row">
+    <label class="col-sm-3 col-form-label" for="">Nombre</label>
+    <section class="col-sm-9">
+      <input
+        class="form-control"
+        placeholder="Nombre de la persona"
+        formControlName="nombre"
+      />
+      <span class="form-text text-danger" *ngIf="campoEsValido('nombre')"
+        >Este campo es obligatorio</span
+      >
+    </section>
+  </section>
+
+  <!-- Agregar Favorito -->
+  <section class="mb-3 row">
+    <label class="col-sm-3 col-form-label" for="">Agregar</label>
+    <section class="col-sm-9">
+      <section class="input-group mb-3">
+        <input
+          class="form-control"
+          placeholder="Agregar favorito"
+          [formControl]="nuevoFavorito"
+          (keyup.enter)="agregarFavorito()"
+        /><!-- (keyup.enter)="(1)" -->
+        <button
+          class="btn btn-outline-primary"
+          type="button"
+          (click)="agregarFavorito()"
+        >
+          Añadir
+        </button>
+      </section>
+    </section>
+  </section>
+
+  <!-- Lista de Juegos Favoritos -->
+  <section class="mb-3 row">
+    <label class="col-sm-3 col-form-label" for="">Favoritos</label>
+    <section class="col-sm-9" formArrayName="favoritos">
+      <section
+        class="input-group mb-1"
+        *ngFor="let favorito of favoritosArr.controls; let i = index"
+      >
+        <input type="text" class="form-control" [formControlName]="i" />
+        <button
+          class="btn btn-outline-danger"
+          type="button"
+          (click)="borrar(i)"
+        >
+          Borrar
+        </button>
+      </section>
+    </section>
+  </section>
+
+  <section class="row">
+    <section class="col-sm-12">
+      <button type="submit" class="btn btn-primary float-end">Guardar</button>
+    </section>
+  </section>
+</form>
+
+<section>Valid</section>
+<pre>{{ miFormulario.valid }}</pre>
+<br />
+
+<section>Value</section>
+<pre>{{ miFormulario.value | json }}</pre>
+<br />
+
+<section>Validar juego nuevo</section>
+<pre>{{ nuevoFavorito.valid }}</pre>
+<br />
+
+<!-- <section>Persona</section>
+<pre>{{ persona | json }}</pre> -->
